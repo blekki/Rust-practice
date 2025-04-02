@@ -1,5 +1,4 @@
 ## Basic explanation
-**(Yes, this readme file is a copy of my othe same file. I have choiced you need know that).**
 
 It's an explanation why I created current reposetory.
 
