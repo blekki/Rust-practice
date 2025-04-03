@@ -1,11 +1,13 @@
-const HEIGHT: i32 = 20;
-const WIDTH: i32 = 20;
+const HEIGHT: i32 = 10;
+const WIDTH: i32 = 30;
 
 
 fn main() {
     
     let correlation: f32 = WIDTH as f32 / HEIGHT as f32;
-    // let correlation  = WIDTH / HEIGHT;
+    // let correlation  = WIDTH / HEIGHT;'
+
+    let mut range = correlation;
 
     for y in 0..HEIGHT {
         for x in 0..WIDTH {
@@ -19,25 +21,36 @@ fn main() {
             }
 
             
-            let diagonal_one = (x as f32) >= (correlation *  y as f32) &&
-                                     (x as f32) <  (correlation * (y + 1) as f32);
-            let diagonal_two = (y as f32) >= (1.0 / correlation *  x as f32) &&
-                                     (y as f32) <  (1.0 / correlation * (x + 1) as f32);
+            // let diagonal_one = (x as f32) >= (correlation *  y as f32) &&
+            //                          (x as f32) <  (correlation * (y + 1) as f32);
+            // let diagonal_two = (y as f32) >= (1.0 / correlation *  x as f32) &&
+            //                          (y as f32) <  (1.0 / correlation * (x + 1) as f32);
 
+            // let diagonal_one = (x as f32) >= (correlation * (HEIGHT - y - 1) as f32) &&
+            //                          (x as f32) <  (correlation * (HEIGHT - y) as f32);
 
-            // let diagonal_one = (x as f32) == (correlation *  y as f32);
-            
-                                     
+            let diagonal_one = (x as f32) < (range) &&
+                                     (x as f32) >= (range - correlation);
+
+            let diagonal_two = (x as f32) < (WIDTH as f32 - range + correlation) &&
+                                     (x as f32) >= (WIDTH as f32 - range);
 
             if diagonal_one || diagonal_two {
-            // if diagonal_one {
                 current_symbol = '*';
             }
+
+
+            // if diagonal_one || diagonal_two {
+            // if diagonal_one {
+            //     current_symbol = '*';
+            // }
             
             print!("{current_symbol}");
             
         }
         println!();
+
+        range += correlation;
     }
 
     // let mut str = String::from("");
