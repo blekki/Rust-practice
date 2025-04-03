@@ -1,5 +1,5 @@
-const HEIGHT: i32 = 10;
-const WIDTH: i32 = 40;
+const HEIGHT: i32 = 20;
+const WIDTH: i32 = 20;
 
 
 fn main() {
@@ -19,8 +19,18 @@ fn main() {
             }
 
             
-            let diagonal_one = (x as f32) >= correlation * (y as f32) && (x as f32) < correlation * ((y + 1) as f32);
-            if diagonal_one {
+            let diagonal_one = (x as f32) >= (correlation *  y as f32) &&
+                                     (x as f32) <  (correlation * (y + 1) as f32);
+            let diagonal_two = (y as f32) >= (1.0 / correlation *  x as f32) &&
+                                     (y as f32) <  (1.0 / correlation * (x + 1) as f32);
+
+
+            // let diagonal_one = (x as f32) == (correlation *  y as f32);
+            
+                                     
+
+            if diagonal_one || diagonal_two {
+            // if diagonal_one {
                 current_symbol = '*';
             }
             
