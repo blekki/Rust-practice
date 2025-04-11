@@ -46,7 +46,7 @@ fn main()
     const FIRST_NUMBER: u32 = 62;
     const SECOND_NUMBER: u32 = 64;
 
-    println!("GCB of {FIRST_NUMBER} and {SECOND_NUMBER} = {}", gcd(FIRST_NUMBER, SECOND_NUMBER));
+    println!("GCD of {FIRST_NUMBER} and {SECOND_NUMBER} = {}", gcd(FIRST_NUMBER, SECOND_NUMBER));
 
     // test();
 }
