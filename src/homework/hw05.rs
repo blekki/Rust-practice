@@ -32,12 +32,12 @@ fn gcd(first_value: u32, second_value: u32) -> u32
 //#[test]
 fn test() {
     println!("<><><> test results <><><>");
-    println!("GCB of 12   and 17   = {}", gcd(12, 17));
-    println!("GCB of 3    and 27   = {}", gcd(3, 27));
-    println!("GCB of 44   and 57   = {}", gcd(44, 57));
-    println!("GCB of 9    and 3    = {}", gcd(9, 3));
-    println!("GCB of 56   and 56   = {}", gcd(56, 56));
-    println!("GCB of 6790 and 6797 = {}", gcd(6790, 6797));
+    println!("GCB of {:4} and {:4} = {:4}", 12, 17, gcd(12, 17));
+    println!("GCB of {:4} and {:4} = {:4}", 3, 27,gcd(3, 27));
+    println!("GCB of {:4} and {:4} = {:4}", 44, 57, gcd(44, 57));
+    println!("GCB of {:4} and {:4} = {:4}", 9, 3, gcd(9, 3));
+    println!("GCB of {:4} and {:4} = {:4}", 56, 56, gcd(56, 56));
+    println!("GCB of {:4} and {:4} = {:4}", 6790, 6797, gcd(6790, 6797));
 }
 
 //########## main program ##########
