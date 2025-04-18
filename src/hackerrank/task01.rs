@@ -3,25 +3,22 @@ use std::io::{self, BufRead};
 fn countApplesAndOranges(s: i32, t: i32, a: i32, b: i32, apples: &[i32], oranges: &[i32]) {
     let mut apples_in_area: u32 = 0;
     let mut oranges_in_area: u32 = 0;
-
+    
+    // check apples
     for apple in apples.iter() {
         if (a + apple >= s) && (a + apple <= t) {
             apples_in_area += 1;
         }
     }
 
-    // for apple in apples {
-    //     if (a + apple >= s) && (a + apple <= t) {
-    //         apples_in_area += 1;
-    //     }
-    // }
-
-    for orange in oranges {
+    // check oranges
+    for orange in oranges.iter() {
         if (b + orange >= s) && (b + orange <= t) {
-            oranges_in_area += 1;           
+            oranges_in_area += 1;      
         }
     }
 
+    // get results
     println!("{apples_in_area}");
     println!("{oranges_in_area}");
 }
