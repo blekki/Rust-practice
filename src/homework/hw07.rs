@@ -1,5 +1,5 @@
 
-fn change_case(string: String) -> String {
+fn invert_case(string: String) -> String {
     let mut result: String = String::from("");
     
     // check every char inside "string" variable
@@ -21,6 +21,6 @@ fn main()
 
     for i in data.iter() {
         print!("before: {:20} |", i.to_string());
-        println!("after: {:20}", change_case(i.to_string()));
+        println!("after: {:20}", invert_case(i.to_string()));
     }
 }
