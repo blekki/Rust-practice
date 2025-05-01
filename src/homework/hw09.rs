@@ -1,13 +1,12 @@
 fn moving(str: String, mut shift: isize) -> String {
-    let mut new_str: String = String::new();
+    let mut result: String = String::new();
 
+    // checking on overflow
     if shift.abs() as usize > str.len() {
         shift = shift % str.len() as isize;
     }
-    // if (shift * -1) as usize > str.len() {
-    //     shift = shift % str.len() as isize;
-    // }
 
+    // shift string
     let (first, second);
     if shift > 0 {
         let new_shift: usize = str.len() - shift as usize;
@@ -18,28 +17,15 @@ fn moving(str: String, mut shift: isize) -> String {
         (first, second) = str.split_at(new_shift);
     }
 
-    new_str += second;
-    new_str += first;
-    return new_str;
-
-    // for i in 0..str.len() {
-    //     print!("{i}");
-    //     let mut pos = i + shift;
-    //     if pos >= str.len() {
-    //         pos -= str.len();
-    //     }
-    //     if pos < 0 {
-    //         pos += str.len();
-    //     }
-    //     let ch = str.chars().nth(pos).unwrap();
-    //     new_str.push(ch);
-    // }
-    // print!("\n");
-
+    // result
+    result += second;
+    result += first;
+    return result;
 }
 
 fn main() 
-{   
+{
+    // #tests   
     let basic: String = String::from("abcdefgh");
     let shifts: [(isize, &str); 9] = [
         (0,  "abcdefgh"),
@@ -56,7 +42,4 @@ fn main()
     shifts.iter().for_each(|(sh, _str)|
         println!("{sh:3}: {}", moving(basic.to_string(), *sh))
     );
-
-    // println!(" 2: {}", moving("12345678".to_string(), 2));
-    // println!("-2: {}", moving("12345678".to_string(), -2));
 }
