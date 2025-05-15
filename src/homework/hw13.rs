@@ -1,3 +1,4 @@
+// ### structures ###
 struct Point {
     x: i32,
     y: i32,
@@ -7,103 +8,66 @@ struct Rectangle {
     b: Point,
 }
 
-fn test_data() -> Vec<Rectangle> {
-    vec![
-        Rectangle {
-            a: Point { x: 2, y: 9 }, // 3
-            b: Point { x: 5, y: 3 },
-        },
-        Rectangle {
-            a: Point { x: 3, y: 8 }, // 7
-            b: Point { x: 10, y: 6 },
-        },
-        Rectangle {
-            a: Point { x: 1, y: 2 },
-            b: Point { x: 20, y: 2 },
-        },
-    ]
+// ### functions ###
+// calulate simple area
+fn calc_area(rectangle: &Rectangle) -> i32{
+    return (rectangle.b.x - rectangle.a.x).abs() * (rectangle.b.y - rectangle.a.y).abs();
 }
-
-// fn calc_area(vec: Vec<Rectangle>) -> i32{
-//     return 2;
-// }
-
-fn collision(cur: &Rectangle, pre: &Rectangle) -> Rectangle {
-    let mut result: Rectangle = Rectangle{a: Point{x: 0, y: 0}, 
+// find deep areas collision
+fn collision_finder(cur: &Rectangle, pre: &Rectangle) -> Rectangle{
+    let mut result: Rectangle = Rectangle{a: Point{x: 0, y: 0},
                                           b: Point{x: 0, y: 0}};
-                                     
-    if (pre.a.x..=pre.b.x).contains(&cur.a.x) {
-        if (pre.a.x..=pre.b.x).contains(&cur.b.x) {
-            result.a.x = cur.a.x;
-            result.b.x = cur.b.x;
-        }
-        else {
-            result.a.x = cur.a.x;
-            result.b.x = pre.b.x;
-        }
+    // possible collision
+    result.a.x = if cur.a.x < pre.a.x {pre.a.x} else {cur.a.x}; // a point (X)
+    result.a.y = if cur.a.y > pre.a.y {pre.a.y} else {cur.a.y}; // a point (Y)
+    result.b.x = if cur.b.x > pre.b.x {pre.b.x} else {cur.b.x}; // b point (X)
+    result.b.y = if cur.b.y < pre.b.y {pre.b.y} else {cur.b.y}; // b point (Y)
+    // chech is collision right
+    if result.a.x > result.b.x || result.a.y < result.b.y {
+        return Rectangle{a: Point{x: 0, y: 0},
+                         b: Point{x: 0, y: 0}};
     }
-    else {
-        if (pre.a.x..=pre.b.x).contains(&cur.b.x) {
-            result.a.x = pre.a.x;
-            result.b.x = cur.b.x;
-        }
-        else {
-            if cur.a.x < pre.a.x && cur.b.x > pre.b.x {
-                result.a.x = pre.a.x;
-                result.b.x = pre.b.x;
-            }
-            // break;
-        }
-    }
+    // result
     return result;
 }
 
 fn area_occupied(vec: Vec<Rectangle>) -> i32 {
-    let mut coll: Vec<Rectangle> = vec![];
-    let mut area: i32 = 0;
+    let mut area: i32 = 0; // future result
+    // calculate every areas
     for cur in 0..vec.len() {
-        area += (vec[cur].b.x - vec[cur].a.x).abs();
+        area += calc_area(&vec[cur]);
+        println!("area: {}", calc_area(&vec[cur]));
         
-        for pre in 0..cur {
-            // let curr = [vec[cur].a.x, vec[cur].b.x];
-            // let prev = [vec[pre].a.x, vec[pre].b.x];
-            // let mut un = [0, 0];
-            let space = collision(&vec[cur], &vec[pre])
-            area -= (&space.b.x - space.a.x).abs();
-            coll.push(space);
-            
-
-            // if (prev[0]..=prev[1]).contains(&curr[0]) {
-            //     if (prev[0]..=prev[1]).contains(&curr[1]) {
-            //         un[0] = curr[0];
-            //         un[1] = curr[1];
-            //     }
-            //     else {
-            //         un[0] = curr[0];
-            //         un[1] = prev[1];
-            //     }
-            // }
-            // else {
-            //     if (prev[0]..=prev[1]).contains(&curr[1]) {
-            //         un[0] = prev[0];
-            //         un[1] = curr[1];
-            //     }
-            //     else {
-            //         if curr[0] < prev[0] && curr[1] > prev[1] {
-            //             un[0] = prev[0];
-            //             un[1] = prev[1];
-            //         }
-            //         // break;
-            //     }
-            // }
-            // area -= (un[1] - un[0]).abs();
+        for pre in 0..cur { // check for collision
+            let coll = collision_finder(&vec[cur], &vec[pre]);
+            // debug
+            // print!("collision: [x:{} y:{} | ", coll.a.x, coll.a.y);
+            // print!("x:{} y:{}]\n", coll.b.x, coll.b.y);
+            area -= calc_area(&coll);
         }
-        // area += (vec[j].b.x - vec[j].a.x).abs() * (vec[j].b.y - vec[j].a.y).abs();
     }
     return area;
 }
+// other
+fn test_data() -> Vec<Rectangle> {
+    vec![
+        Rectangle {
+            a: Point { x: 2, y: 9 },
+            b: Point { x: 5, y: 3 },
+        },
+        Rectangle {
+            a: Point { x: 1, y: 8 },
+            b: Point { x: 11, y: 6 },
+        },
+        Rectangle {
+            a: Point { x: 9, y: 10 },
+            b: Point { x: 13, y: 2 },
+        }
+    ]
+}
 
+// ####### main program #######
 fn main() {
-    let area = area_occupied(test_data());
-    println!("{}", area);
+    let full_area = area_occupied(test_data());
+    println!("{}", full_area);
 }
