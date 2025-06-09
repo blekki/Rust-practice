@@ -1,6 +1,5 @@
 use std::env;
 use std::fs::File;
-use std::intrinsics::ceilf32;
 use std::io::{self, BufRead, Write};
 
 fn gradingStudents(grades: &[i32]) -> Vec<i32> {
