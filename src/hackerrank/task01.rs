@@ -1,64 +1,37 @@
-use std::io::{self, BufRead};
+use std::env;
+use std::fs::File;
+use std::io::{self, BufRead, Write};
 
-fn countApplesAndOranges(s: i32, t: i32, a: i32, b: i32, apples: &[i32], oranges: &[i32]) {
-    let mut apples_in_area: u32 = 0;
-    let mut oranges_in_area: u32 = 0;
-    
-    // check apples
-    for apple in apples.iter() {
-        if (a + apple >= s) && (a + apple <= t) {
-            apples_in_area += 1;
-        }
+/*
+ * Complete the 'simpleArraySum' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts INTEGER_ARRAY ar as parameter.
+ */
+
+fn simpleArraySum(ar: &[i32]) -> i32 {
+    let mut result: i32 = 0;
+    for num in ar {
+        result += num;
     }
-
-    // check oranges
-    for orange in oranges.iter() {
-        if (b + orange >= s) && (b + orange <= t) {
-            oranges_in_area += 1;      
-        }
-    }
-
-    // get results
-    println!("{apples_in_area}");
-    println!("{oranges_in_area}");
+    return result;
 }
 
 fn main() {
     let stdin = io::stdin();
     let mut stdin_iterator = stdin.lock().lines();
 
-    let first_multiple_input: Vec<String> = stdin_iterator.next().unwrap().unwrap()
-        .split(' ')
-        .map(|s| s.to_string())
-        .collect();
+    let mut fptr = File::create(env::var("OUTPUT_PATH").unwrap()).unwrap();
 
-    let s = first_multiple_input[0].trim().parse::<i32>().unwrap();
-    let t = first_multiple_input[1].trim().parse::<i32>().unwrap();
-    let second_multiple_input: Vec<String> = stdin_iterator.next().unwrap().unwrap()
-        .split(' ')
-        .map(|s| s.to_string())
-        .collect();
+    let _ar_count = stdin_iterator.next().unwrap().unwrap().trim().parse::<i32>().unwrap();
 
-    let a = second_multiple_input[0].trim().parse::<i32>().unwrap();
-    let b = second_multiple_input[1].trim().parse::<i32>().unwrap();
-    let third_multiple_input: Vec<String> = stdin_iterator.next().unwrap().unwrap()
-        .split(' ')
-        .map(|s| s.to_string())
-        .collect();
-
-    let m = third_multiple_input[0].trim().parse::<i32>().unwrap();
-    let n = third_multiple_input[1].trim().parse::<i32>().unwrap();
-    let apples: Vec<i32> = stdin_iterator.next().unwrap().unwrap()
-        .trim_end()
-        .split(' ')
-        .map(|s| s.to_string().parse::<i32>().unwrap())
-        .collect();
-    let oranges: Vec<i32> = stdin_iterator.next().unwrap().unwrap()
+    let ar: Vec<i32> = stdin_iterator.next().unwrap().unwrap()
         .trim_end()
         .split(' ')
         .map(|s| s.to_string().parse::<i32>().unwrap())
         .collect();
 
-    countApplesAndOranges(s, t, a, b, &apples, &oranges);
+    let result = simpleArraySum(&ar);
+
+    writeln!(&mut fptr, "{}", result).ok();
 }
-
