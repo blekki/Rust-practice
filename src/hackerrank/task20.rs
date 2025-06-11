@@ -3,19 +3,17 @@ use std::fs::File;
 use std::io::{self, BufRead, Write};
 
 fn pageCount(n: i32, p: i32) -> i32 {
-    // pages with a final one
+    // pages with a final one (if exists)
     let mut pages = n;
     if pages % 2 == 0 { pages += 1; }
 
-    // min pages need turn
-    let mut turn = 0;
-    if p * 2 - pages < 0 {
-        turn = p;
-    } 
-    else {
-        turn = pages - p;
+    // how to better turn pages - start at the beginning or the end
+    let mut turn = p;
+    if p * 2 - pages > 0 {
+        turn = pages - turn;
     }
 
+    // how much action need to do (result)
     return (turn / 2) as i32;
 }
 
